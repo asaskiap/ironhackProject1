@@ -1,0 +1,42 @@
+body {
+    background-color: rgb(20, 21, 29);
+    color: whitesmoke;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 20px;
+    text-align: center;
+}
+
+#scoreViewer {
+    height: 3em;
+    display: flex;
+}
+
+#energy,
+#stars,
+#msg,
+#muffins,
+#sunglasses {
+    color: whitesmoke;
+    width: 20vw;
+    text-align: center;
+    padding: 20px;
+}
+
+canvas {
+    background-color: rgb(33, 40, 54);
+    border: 2px solid whitesmoke;
+}
+
+#processTracker {
+    display: flex;
+}
+
+#clock,
+#distance {
+    width: 50vw;
+    text-align: center;
+}
