@@ -9,18 +9,19 @@ class Player {
         this.dy = dy;
         this.stars = 0;
         this.muffins = 0;
-        this.sunglasses = 0;
-        this.sunglassctr = 0;
-        this.energy = 100;
-        this.energyClock = setInterval(() => {
-            this.energy--;
-        }, 1000);
+        this.fish = 0;
         this.distanceToHome = 10000;
+    }
+
+    collectFish() {
+        console.log('interaction');
+        this.fish++;
+        const fishCtr = document.getElementById('fish');
+        fishCtr.innerHTML += '&#128031';
     }
 
     collectStars() {
         this.stars++;
-        this.energy += 10;
         if (this.stars % 5 === 0) {
             this.addSpeed();
         }
@@ -34,47 +35,42 @@ class Player {
         this.fernctr = 200;
         this.fern_x = this.x;
         this.fern_y = this.y;
-
         this.fernDist = this.distanceToHome;
     }
 
     pillow() {
         this.pillowctr = 200;
-
         this.distanceToHome += this.x;
-
         this.pillowDist = this.distanceToHome;
     }
 
     sunbeam() {
-        if (this.sunglasses > 0) {
-            this.sunglassctr = 100;
-            this.sunglasses--;
-        }
         this.sunbeamctr = 100;
         this.sunbeamy = this.y;
     }
 
-    runLogic() {
-        //  energy
-        const energyClock = document.getElementById('energy');
-        if (this.energy < 0) {
-            energyClock.innerHTML = `GAME OVER !!`;
-        } else {
-            energyClock.innerHTML = `ENERGY: ${this.energy}`;
+    jump() {
+        if (this.muffins > 2) {
+            this.x += 250;
+            this.distanceToHome -= 250;
+            this.muffins -= 3;
         }
+    }
 
+    runLogic() {
         // Muffins
         const muffins = document.getElementById('muffins');
-        muffins.innerHTML = `MUFFIN COUNT: ${this.muffins}`;
+        muffins.innerHTML = `&#129473: ${this.muffins}`;
+        if (this.muffins > 2) {
+            const bolt = document.getElementById('bolt');
+            bolt.innerHTML = `&#9889`;
+        } else {
+            bolt.innerHTML = ``;
+        }
 
         //stars
         const stars = document.getElementById('stars');
-        stars.innerHTML = `STAR COUNT: ${this.stars}`;
-
-        //sunglasses
-        const sunglass = document.getElementById('sunglasses');
-        sunglass.innerHTML = `SUNGLASSES: ${this.sunglasses}`;
+        stars.innerHTML = `&#10032: ${this.stars}`;
 
         // reset msg
         const msg = document.getElementById('msg');
@@ -112,16 +108,12 @@ class Player {
             msg.innerHTML = `NAP ATTACK`;
         }
         if (this.sunbeamctr > 0) {
-            if (this.sunglassctr > 0) {
-                this.sunglassctr--;
-            } else {
-                this.x = this.x - 2;
-                this.distanceToHome += 2;
-                this.y = this.sunbeamy;
-                this.sunbeamctr--;
-                const msg = document.getElementById('msg');
-                msg.innerHTML = `SUN BEAM DRAG`;
-            }
+            this.x = this.x - 2;
+            this.distanceToHome += 2;
+            this.y = this.sunbeamy;
+            this.sunbeamctr--;
+            const msg = document.getElementById('msg');
+            msg.innerHTML = `SUN BEAM DRAG`;
         }
 
         if (this.speedctr > 0) {
@@ -132,8 +124,8 @@ class Player {
     }
 
     addSpeed() {
-        this.dx += 2;
-        this.dy += 2;
+        this.dx += 1;
+        this.dy += 1;
         this.speedctr = 100;
     }
 

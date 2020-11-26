@@ -9,9 +9,8 @@ class Game {
         this.pillows = [];
         this.muffins = [];
         this.sunbeams = [];
-        this.sunglasses = [];
-
-        this.initialSpeed = 2;
+        this.spacefish = [];
+        this.initialSpeed = 1;
         this.clock = 300;
         this.i = 0;
         this.timectr = setInterval(() => {
@@ -26,6 +25,7 @@ class Game {
         }, 1000);
     }
 
+    //////////////////////KEYS////////////////////////////////////////////
     setKeys() {
         window.addEventListener('keydown', (event) => {
             switch (event.key) {
@@ -44,11 +44,15 @@ class Game {
                     break;
                 case 'ArrowLeft':
                     this.player.x -= this.player.dx;
+                    this.player.distanceToHome += this.player.dx;
                     break;
+                case ' ':
+                    this.player.jump();
             }
         });
     }
 
+    ///////////////////////CREATE////////////////////////////////////////////////////////////
     createStars() {
         if (Math.random() < 0.03 + this.i * 2) {
             const star = new Star(
@@ -94,30 +98,37 @@ class Game {
     }
 
     createSunbeam() {
-        if (Math.random() < 0.0002) {
+        if (Math.random() < 0.0004) {
             const sun = new Sunbeam(200);
             this.sunbeams.push(sun);
         }
     }
 
-    createSunglasses() {
-        if (Math.random() < 0.002 + this.i) {
-            const glass = new Sunglasses(
+    createSpacefish() {
+        if (Math.random() < 0.0004) {
+            const fish = new Spacefisch(
                 this.canvas.width,
                 Math.random() * this.canvas.height,
-                this.initialSpeed + 2
+                2,
+                2
             );
-            this.sunglasses.push(glass);
+            this.spacefish.push(fish);
         }
     }
+
+    ///////////////////////////CLEAN UP////////////////////////////////////////////////////
 
     cleanUp() {
         this.cleanUpItems(this.stars);
         this.cleanUpItems(this.ferns);
         this.cleanUpItems(this.muffins);
         this.cleanUpItems(this.pillows);
-        this.cleanUpItems(this.sunglasses);
         this.cleanUpItems(this.sunbeams);
+        for (let i = 0; i < this.spacefish.length; i++) {
+            if (this.spacefish[i].x + this.spacefish[i].width < 0) {
+                this.spacefish.splice(i, 1);
+            }
+        }
     }
 
     cleanUpItems(item) {
@@ -132,7 +143,7 @@ class Game {
         }
     }
 
-    // detect interactions
+    ///////////////// detect interactions ////////////////////////////////////////////
     interactionDetection() {
         // stars
         for (let star of this.stars) {
@@ -170,27 +181,31 @@ class Game {
             }
         }
 
-        // sunglasses
-        for (let glass of this.sunglasses) {
-            if (glass.interactionDetection(this.player)) {
-                this.player.sunglasses++;
-                let idx = this.sunglasses.indexOf(glass);
-                this.sunglasses.splice(idx, 1);
-            }
-        }
-
         // sunbeam
         for (let sun of this.sunbeams) {
             if (sun.x < this.player.x && sun.x + sun.width > this.player.x) {
                 this.player.sunbeam();
             }
         }
+
+        //spacefish
+        for (let fish of this.spacefish) {
+            if (fish.interactionDetection(this.player)) {
+                this.player.collectFish();
+                let idx = this.spacefish.indexOf(fish);
+                this.spacefish.splice(idx, 1);
+            }
+        }
     }
+
+    ///////////////////////// SPEED //////////////////////////////////////////////
 
     speedUpdate(factor) {
         this.initialSpeed += 0.0001 * factor;
         this.i += 0.000001;
     }
+
+    ////////////////////////////// LOGIC ///////////////////////////////////////////
 
     runLogic() {
         // player logic
@@ -219,29 +234,26 @@ class Game {
             muffin.runLogic();
         }
 
-        //sunglasses logic
-        this.createSunglasses();
-        for (let glass of this.sunglasses) {
-            glass.runLogic();
-        }
-
         // sunbeam logic
         this.createSunbeam();
         for (let sun of this.sunbeams) {
             sun.runLogic();
         }
 
+        //spacefish logic
+        this.createSpacefish();
+        for (let fish of this.spacefish) {
+            fish.runLogic();
+        }
         // cleanUp
         this.cleanUp();
 
         this.interactionDetection();
         let factor = 1;
-        // if (this.player.x === this.canvas.width) {
-        //     factor = 2;
-        // }
         this.speedUpdate(factor);
     }
 
+    /////////////////////////////////// DRAW //////////////////////////////////////
     draw() {
         // clear
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -264,13 +276,13 @@ class Game {
         for (let muffin of this.muffins) {
             muffin.draw();
         }
-        // draw sunglasses
-        for (let glass of this.sunglasses) {
-            glass.draw();
-        }
+
         // draw sunbeams
         for (let sun of this.sunbeams) {
             sun.draw();
+        }
+        for (let fish of this.spacefish) {
+            fish.draw();
         }
 
         //display distance
@@ -283,6 +295,8 @@ class Game {
       )}`;
         }
     }
+
+    ///////////////////////////////////// LOOP ////////////////////////////////////
 
     loop() {
         this.runLogic();

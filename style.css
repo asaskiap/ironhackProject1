@@ -15,11 +15,11 @@ body {
     display: flex;
 }
 
-#energy,
 #stars,
 #msg,
 #muffins,
-#sunglasses {
+#bolt,
+#fish {
     color: whitesmoke;
     width: 20vw;
     text-align: center;
