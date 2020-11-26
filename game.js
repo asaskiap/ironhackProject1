@@ -10,11 +10,7 @@ class Game {
         this.muffins = [];
         this.sunbeams = [];
         this.sunglasses = [];
-        this.asteroidBelt = new AsteroidBelt(
-            this.canvas.width,
-            this.canvas.height,
-            false
-        );
+
         this.initialSpeed = 2;
         this.clock = 300;
         this.i = 0;
@@ -200,65 +196,50 @@ class Game {
         // player logic
         this.player.runLogic();
 
-        // activate / deactivate asteroid belt if player comes close to far side
-        // if (this.player.x > this.canvas.width - 30) {
-        //     if (!this.asteroidBelt.active) {
-        //         this.asteroidBelt.active = true;
-        //         this.player.x = 100;
-        //         this.player.y = this.canvas.height / 2;
-        //     } else {
-        //         this.asteroidBelt.active = false;
-        //     }
-        // }
-
-        if (!this.asteroidBelt.active) {
-            // star logic
-            this.createStars();
-            for (let star of this.stars) {
-                star.runLogic();
-            }
-            //fern logic
-            this.createFerns();
-            for (let fern of this.ferns) {
-                fern.runLogic();
-            }
-
-            // pillow logic
-            this.createPillows();
-            for (let pillow of this.pillows) {
-                pillow.runLogic();
-            }
-
-            // muffin logic
-            this.createMuffins();
-            for (let muffin of this.muffins) {
-                muffin.runLogic();
-            }
-
-            //sunglasses logic
-            this.createSunglasses();
-            for (let glass of this.sunglasses) {
-                glass.runLogic();
-            }
-
-            // sunbeam logic
-            this.createSunbeam();
-            for (let sun of this.sunbeams) {
-                sun.runLogic();
-            }
-
-            // cleanUp
-            this.cleanUp();
-
-            this.interactionDetection();
-            let factor = 1;
-            // if (this.player.x === this.canvas.width) {
-            //     factor = 2;
-            // }
-            this.speedUpdate(factor);
-        } else {
-            this.asteroidBelt.runLogic(this.player);
+        // star logic
+        this.createStars();
+        for (let star of this.stars) {
+            star.runLogic();
         }
+        //fern logic
+        this.createFerns();
+        for (let fern of this.ferns) {
+            fern.runLogic();
+        }
+
+        // pillow logic
+        this.createPillows();
+        for (let pillow of this.pillows) {
+            pillow.runLogic();
+        }
+
+        // muffin logic
+        this.createMuffins();
+        for (let muffin of this.muffins) {
+            muffin.runLogic();
+        }
+
+        //sunglasses logic
+        this.createSunglasses();
+        for (let glass of this.sunglasses) {
+            glass.runLogic();
+        }
+
+        // sunbeam logic
+        this.createSunbeam();
+        for (let sun of this.sunbeams) {
+            sun.runLogic();
+        }
+
+        // cleanUp
+        this.cleanUp();
+
+        this.interactionDetection();
+        let factor = 1;
+        // if (this.player.x === this.canvas.width) {
+        //     factor = 2;
+        // }
+        this.speedUpdate(factor);
     }
 
     draw() {
@@ -290,10 +271,6 @@ class Game {
         // draw sunbeams
         for (let sun of this.sunbeams) {
             sun.draw();
-        }
-
-        if (this.asteroidBelt.active) {
-            this.asteroidBelt.draw();
         }
 
         //display distance
