@@ -8,11 +8,22 @@ class Player {
         this.dx = dx;
         this.dy = dy;
         this.stars = 0;
+        this.bulletStars = [];
         this.muffins = 0;
         this.fish = 0;
         this.distanceToHome = 10000;
     }
 
+    shoot() {
+        if (this.stars > 0) {
+            const bullet = new BulletStar(
+                this.x + this.height / 2,
+                this.y + this.width / 2
+            );
+            this.bulletStars.push(bullet);
+            this.stars--;
+        }
+    }
     collectFish() {
         console.log('interaction');
         this.fish++;

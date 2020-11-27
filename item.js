@@ -6,6 +6,8 @@ class Item {
         this.y = y;
         this.dx = dx;
         this.dy = dy;
+        this.width;
+        this.height;
         this.color;
     }
 
@@ -16,9 +18,9 @@ class Item {
 
     interactionDetection(player) {
         if (
-            this.x < player.x + player.width &&
+            this.x + this.width < player.x + player.width &&
             this.x > player.x &&
-            this.y < player.y + player.height &&
+            this.y + this.height < player.y + player.height &&
             this.y > player.y
         ) {
             return true;
@@ -29,6 +31,6 @@ class Item {
 
     draw() {
         game.ctx.fillStyle = this.color;
-        game.ctx.fillRect(this.x, this.y, 10, 10);
+        game.ctx.fillRect(this.x, this.y, this.width, this.height);
     }
 }

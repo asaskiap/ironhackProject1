@@ -10,6 +10,7 @@ class Game {
         this.muffins = [];
         this.sunbeams = [];
         this.spacefish = [];
+        this.octopus;
         this.initialSpeed = 1;
         this.clock = 300;
         this.i = 0;
@@ -48,6 +49,9 @@ class Game {
                     break;
                 case ' ':
                     this.player.jump();
+                case 'y':
+                    console.log('shoot');
+                    this.player.shoot();
             }
         });
     }
@@ -116,6 +120,15 @@ class Game {
         }
     }
 
+    createOctopus() {
+        this.octopus = new Octopus(
+            this.canvas.width / 2,
+            this.canvas.height / 6,
+            0,
+            0
+        );
+    }
+
     ///////////////////////////CLEAN UP////////////////////////////////////////////////////
 
     cleanUp() {
@@ -127,6 +140,11 @@ class Game {
         for (let i = 0; i < this.spacefish.length; i++) {
             if (this.spacefish[i].x + this.spacefish[i].width < 0) {
                 this.spacefish.splice(i, 1);
+            }
+        }
+        for (let i = 0; i < this.player.bulletStars.length; i++) {
+            if (this.player.bulletStars[i].x > this.canvas.width) {
+                this.player.bulletStars.splice(i, 1);
             }
         }
     }
@@ -161,6 +179,14 @@ class Game {
                 this.ferns.splice(idx, 1);
                 this.player.fern();
             }
+            for (let bullet of this.player.bulletStars) {
+                if (bullet.interactionDetection(fern)) {
+                    let idx = this.ferns.indexOf(fern);
+                    let idxB = this.player.bulletStars.indexOf(bullet);
+                    this.ferns.splice(idx, 1);
+                    this.player.bulletStars.splice(idxB, 1);
+                }
+            }
         }
 
         // pillows
@@ -169,6 +195,14 @@ class Game {
                 this.player.pillow();
                 let idx = this.pillows.indexOf(pillow);
                 this.pillows.splice(idx, 1);
+            }
+            for (let bullet of this.player.bulletStars) {
+                if (bullet.interactionDetection(pillow)) {
+                    let idx = this.pillows.indexOf(pillow);
+                    let idxB = this.player.bulletStars.indexOf(bullet);
+                    this.pillows.splice(idx, 1);
+                    this.player.bulletStars.splice(idxB, 1);
+                }
             }
         }
 
@@ -196,6 +230,14 @@ class Game {
                 this.spacefish.splice(idx, 1);
             }
         }
+
+        // bullets with octopus
+
+        // for (let bullet of this.player.bulletStars) {
+        //     // if (bullet.interactionDetection(this.octopus)) {
+        //     //     // console.log(this.octopus);
+        //     // }
+        // }
     }
 
     ///////////////////////// SPEED //////////////////////////////////////////////
@@ -245,6 +287,14 @@ class Game {
         for (let fish of this.spacefish) {
             fish.runLogic();
         }
+        //bullet logic
+        for (let bullet of this.player.bulletStars) {
+            bullet.runLogic();
+        }
+
+        //octopus logic
+        //this.createOctopus();
+
         // cleanUp
         this.cleanUp();
 
@@ -281,9 +331,16 @@ class Game {
         for (let sun of this.sunbeams) {
             sun.draw();
         }
+        // spacefish
         for (let fish of this.spacefish) {
             fish.draw();
         }
+        //bullets
+        for (let bullet of this.player.bulletStars) {
+            bullet.draw();
+        }
+        //octopus
+        // this.octopus.draw();
 
         //display distance
         const dist = document.getElementById('distance');

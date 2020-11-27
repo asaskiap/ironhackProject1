@@ -2,6 +2,8 @@ class Pillow extends Item {
     constructor(x, y, dx, dy = 0) {
         super(x, y, dx, (dy = 0));
         this.color = '#ab183f';
+        this.width = 10;
+        this.height = 10;
     }
 
     runLogic() {

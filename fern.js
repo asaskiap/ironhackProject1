@@ -2,6 +2,8 @@ class Fern extends Item {
     constructor(x, y, dx, dy = 0) {
         super(x, y, dx, (dy = 0));
         this.color = '#13ab48';
+        this.width = 10;
+        this.height = 10;
     }
 
     runLogic() {
