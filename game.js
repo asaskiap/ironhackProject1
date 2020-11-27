@@ -10,7 +10,12 @@ class Game {
         this.muffins = [];
         this.sunbeams = [];
         this.spacefish = [];
-        this.octopus;
+        this.octopus = new Octopus(
+            this.canvas.width - 150,
+            this.canvas.height / 6,
+            0,
+            1
+        );
         this.initialSpeed = 1;
         this.clock = 300;
         this.i = 0;
@@ -49,6 +54,7 @@ class Game {
                     break;
                 case ' ':
                     this.player.jump();
+                    break;
                 case 'y':
                     console.log('shoot');
                     this.player.shoot();
@@ -118,15 +124,6 @@ class Game {
             );
             this.spacefish.push(fish);
         }
-    }
-
-    createOctopus() {
-        this.octopus = new Octopus(
-            this.canvas.width / 2,
-            this.canvas.height / 6,
-            0,
-            0
-        );
     }
 
     ///////////////////////////CLEAN UP////////////////////////////////////////////////////
@@ -233,11 +230,17 @@ class Game {
 
         // bullets with octopus
 
-        // for (let bullet of this.player.bulletStars) {
-        //     // if (bullet.interactionDetection(this.octopus)) {
-        //     //     // console.log(this.octopus);
-        //     // }
-        // }
+        if (this.clock < 100) {
+            if (this.octopus) {
+                for (let bullet of this.player.bulletStars) {
+                    if (bullet.interactionDetection(this.octopus)) {
+                        this.octopus.hit();
+                        let idxB = this.player.bulletStars.indexOf(bullet);
+                        this.player.bulletStars.splice(idxB, 1);
+                    }
+                }
+            }
+        }
     }
 
     ///////////////////////// SPEED //////////////////////////////////////////////
@@ -293,7 +296,13 @@ class Game {
         }
 
         //octopus logic
-        //this.createOctopus();
+
+        if (this.octopus) {
+            this.octopus.runLogic();
+            if (this.octopus.life < 0) {
+                this.octopus = undefined;
+            }
+        }
 
         // cleanUp
         this.cleanUp();
@@ -340,7 +349,11 @@ class Game {
             bullet.draw();
         }
         //octopus
-        // this.octopus.draw();
+        if (this.clock < 200) {
+            if (this.octopus) {
+                this.octopus.draw();
+            }
+        }
 
         //display distance
         const dist = document.getElementById('distance');

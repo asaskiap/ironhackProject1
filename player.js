@@ -11,7 +11,7 @@ class Player {
         this.bulletStars = [];
         this.muffins = 0;
         this.fish = 0;
-        this.distanceToHome = 10000;
+        this.distanceToHome = 5000;
     }
 
     shoot() {
