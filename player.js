@@ -11,18 +11,17 @@ class Player {
         this.bulletStars = [];
         this.muffins = 0;
         this.fish = 0;
-        this.distanceToHome = 5000;
     }
 
     shoot() {
-        if (this.stars > 0) {
-            const bullet = new BulletStar(
-                this.x + this.height / 2,
-                this.y + this.width / 2
-            );
-            this.bulletStars.push(bullet);
-            this.stars--;
-        }
+        // if (this.stars > 0) {
+        const bullet = new BulletStar(
+            this.x + this.height / 2,
+            this.y + this.width / 2
+        );
+        this.bulletStars.push(bullet);
+        this.stars--;
+        // }
     }
     collectFish() {
         console.log('interaction');
@@ -46,13 +45,10 @@ class Player {
         this.fernctr = 200;
         this.fern_x = this.x;
         this.fern_y = this.y;
-        this.fernDist = this.distanceToHome;
     }
 
     pillow() {
         this.pillowctr = 200;
-        this.distanceToHome += this.x;
-        this.pillowDist = this.distanceToHome;
     }
 
     sunbeam() {
@@ -61,9 +57,9 @@ class Player {
     }
 
     jump() {
-        if (this.muffins > 2) {
+        // you can't jump if you are already in a sunbeam
+        if (this.sunbeamctr < 1 && this.muffins > 2) {
             this.x += 250;
-            this.distanceToHome -= 250;
             this.muffins -= 3;
         }
     }
@@ -105,7 +101,6 @@ class Player {
             this.x = this.fern_x;
             this.y = this.fern_y;
 
-            this.distanceToHome = this.fernDist;
             this.fernctr--;
             const msg = document.getElementById('msg');
             msg.innerHTML = `FERN SNACKING ATTACK`;
@@ -113,14 +108,12 @@ class Player {
         if (this.pillowctr > 0) {
             this.x = 0;
             this.y = 0;
-            this.distanceToHome = this.pillowDist;
             this.pillowctr--;
             const msg = document.getElementById('msg');
             msg.innerHTML = `NAP ATTACK`;
         }
         if (this.sunbeamctr > 0) {
             this.x = this.x - 2;
-            this.distanceToHome += 2;
             this.y = this.sunbeamy;
             this.sunbeamctr--;
             const msg = document.getElementById('msg');

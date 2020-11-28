@@ -14,8 +14,9 @@ class Game {
             this.canvas.width - 150,
             this.canvas.height / 6,
             0,
-            1
+            3
         );
+        this.wormhole = undefined;
         this.initialSpeed = 1;
         this.clock = 300;
         this.i = 0;
@@ -115,7 +116,7 @@ class Game {
     }
 
     createSpacefish() {
-        if (Math.random() < 0.0004) {
+        if (Math.random() < 0.0007) {
             const fish = new Spacefisch(
                 this.canvas.width,
                 Math.random() * this.canvas.height,
@@ -124,6 +125,13 @@ class Game {
             );
             this.spacefish.push(fish);
         }
+    }
+
+    createWormhole() {
+        this.wormhole = new Wormhole(
+            this.canvas.width - 100,
+            this.canvas.height / 2
+        );
     }
 
     ///////////////////////////CLEAN UP////////////////////////////////////////////////////
@@ -230,15 +238,24 @@ class Game {
 
         // bullets with octopus
 
-        if (this.clock < 100) {
-            if (this.octopus) {
-                for (let bullet of this.player.bulletStars) {
-                    if (bullet.interactionDetection(this.octopus)) {
-                        this.octopus.hit();
-                        let idxB = this.player.bulletStars.indexOf(bullet);
-                        this.player.bulletStars.splice(idxB, 1);
-                    }
+        if (this.octopus) {
+            for (let bullet of this.player.bulletStars) {
+                if (bullet.interactionDetection(this.octopus)) {
+                    this.octopus.hit();
+                    let idxB = this.player.bulletStars.indexOf(bullet);
+                    this.player.bulletStars.splice(idxB, 1);
                 }
+            }
+        }
+
+        // wormhole
+
+        if (this.wormhole) {
+            if (this.wormhole.interactionDetection(this.player)) {
+                console.log('YOU WON');
+                const clock = document.getElementById('clock');
+
+                clock.innerHTML = `YOU WON!!`;
             }
         }
     }
@@ -301,6 +318,7 @@ class Game {
             this.octopus.runLogic();
             if (this.octopus.life < 0) {
                 this.octopus = undefined;
+                this.createWormhole();
             }
         }
 
@@ -349,20 +367,14 @@ class Game {
             bullet.draw();
         }
         //octopus
-        if (this.clock < 200) {
-            if (this.octopus) {
-                this.octopus.draw();
-            }
+        // if (this.player.fish > 2) {
+        if (this.octopus) {
+            this.octopus.draw();
         }
+        // }
 
-        //display distance
-        const dist = document.getElementById('distance');
-        if (this.player.distanceToHome < 0) {
-            dist.innerHTML = `YOU WON`;
-        } else {
-            dist.innerHTML = `Distance to home: ${Math.floor(
-        this.player.distanceToHome
-      )}`;
+        if (this.wormhole) {
+            this.wormhole.draw();
         }
     }
 

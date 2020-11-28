@@ -13,7 +13,7 @@ class Octopus extends Item {
     }
 
     interactionDetection() {
-        if (this.y < 0 || this.y > game.canvas.height) {
+        if (this.y < 0 || this.y + this.height > game.canvas.height) {
             this.dy *= -1;
         }
     }
