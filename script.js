@@ -4,8 +4,8 @@
 // collect stars, muffins and fish
 
 // # TODAY
-// wormhole
-// game over and start screen
+// wormhole*
+// game over and start screen*
 // player movement
 // tweak times and probabilities
 

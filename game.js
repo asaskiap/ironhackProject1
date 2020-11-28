@@ -36,6 +36,8 @@ class Game {
         this.i = 0;
         this.active = true;
         this.clock = 300;
+
+        this.keys = [];
     }
 
     //////////////////////KEYS////////////////////////////////////////////
@@ -43,28 +45,67 @@ class Game {
         window.addEventListener('keydown', (event) => {
             switch (event.key) {
                 case 'ArrowUp':
-                    this.player.y -= this.player.dy;
+                    //this.player.y -= this.player.dy;
+                    if (!this.keys.includes('ArrowUp')) {
+                        this.keys.push('ArrowUp');
+                    }
+
                     break;
                 case 'ArrowDown':
-                    this.player.y += this.player.dy;
+                    //this.player.y += this.player.dy;
+                    if (!this.keys.includes('ArrowDown')) {
+                        this.keys.push('ArrowDown');
+                    }
                     break;
                 case 'ArrowRight':
                     if (this.player.sunbeamctr > 0) {
                         break;
                     }
-                    this.player.x += this.player.dx;
-                    this.player.distanceToHome -= this.player.dx;
+                    // this.player.x += this.player.dx;
+                    if (!this.keys.includes('ArrowRight')) {
+                        this.keys.push('ArrowRight');
+                    }
+
                     break;
                 case 'ArrowLeft':
-                    this.player.x -= this.player.dx;
-                    this.player.distanceToHome += this.player.dx;
+                    // this.player.x -= this.player.dx;
+                    if (!this.keys.includes('ArrowLeft')) {
+                        this.keys.push('ArrowLeft');
+                    }
                     break;
                 case ' ':
-                    this.player.jump();
+                    //this.player.jump();
+                    if (!this.keys.includes('Space')) {
+                        this.keys.push('Space');
+                    }
                     break;
                 case 'y':
-                    console.log('shoot');
-                    this.player.shoot();
+                    //this.player.shoot();
+                    if (!this.keys.includes('y')) {
+                        this.keys.push('y');
+                    }
+            }
+        });
+
+        window.addEventListener('keyup', (event) => {
+            switch (event.key) {
+                case 'ArrowUp':
+                    this.keys.splice(this.keys.indexOf('ArrowUp'), 1);
+                    break;
+                case 'ArrowDown':
+                    this.keys.splice(this.keys.indexOf('ArrowDown'), 1);
+                    break;
+                case 'ArrowRight':
+                    this.keys.splice(this.keys.indexOf('ArrowRight'), 1);
+                    break;
+                case 'ArrowLeft':
+                    this.keys.splice(this.keys.indexOf('ArrowLeft'), 1);
+                    break;
+                case ' ':
+                    this.keys.splice(this.keys.indexOf('Space'), 1);
+                    break;
+                case 'y':
+                    this.keys.splice(this.keys.indexOf('y'), 1);
             }
         });
     }
@@ -276,6 +317,26 @@ class Game {
     ////////////////////////////// LOGIC ///////////////////////////////////////////
 
     runLogic() {
+        // keys
+        if (this.keys.includes('ArrowUp')) {
+            this.player.y -= this.player.dy;
+        }
+        if (this.keys.includes('ArrowDown')) {
+            this.player.y += this.player.dy;
+        }
+        if (this.keys.includes('ArrowRight')) {
+            this.player.x += this.player.dx;
+        }
+        if (this.keys.includes('ArrowLeft')) {
+            this.player.x -= this.player.dx;
+        }
+        if (this.keys.includes('Space')) {
+            this.player.jump();
+            console.log('jump');
+        }
+        if (this.keys.includes('y')) {
+            this.player.shoot();
+        }
         // player logic
         this.player.runLogic();
 

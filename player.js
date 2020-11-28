@@ -1,5 +1,5 @@
 class Player {
-    constructor(game, x, y, h, w, dx = 2, dy = 2) {
+    constructor(game, x, y, h, w, dx = 1, dy = 1) {
         this.game = game;
         this.x = x;
         this.y = y;
@@ -9,6 +9,7 @@ class Player {
         this.dy = dy;
         this.stars = 0;
         this.bulletStars = [];
+        this.sunbeamctr = 0;
         this.muffins = 0;
         this.fish = 0;
     }
@@ -58,6 +59,7 @@ class Player {
 
     jump() {
         // you can't jump if you are already in a sunbeam
+        console.log(this.sunbeamctr, this.muffins);
         if (this.sunbeamctr < 1 && this.muffins > 2) {
             this.x += 250;
             this.muffins -= 3;
@@ -128,8 +130,8 @@ class Player {
     }
 
     addSpeed() {
-        this.dx += 1;
-        this.dy += 1;
+        this.dx += 0.5;
+        this.dy += 0.5;
         this.speedctr = 100;
     }
 
