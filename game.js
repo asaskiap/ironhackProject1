@@ -35,7 +35,7 @@ class Game {
         this.initialSpeed = 1;
         this.i = 0;
         this.active = true;
-        this.clock = 30;
+        this.clock = 300;
     }
 
     //////////////////////KEYS////////////////////////////////////////////
