@@ -9,27 +9,57 @@
 </head>
 
 <body>
-    <div id="scoreViewer">
-        <div id="stars"></div>
-        <div id="muffins"></div>
-        <div id="msg"></div>
-        <div id="bolt"></div>
+    <section id="preGame">
+        <div>
+            <h1>Start Game</h1>
+            <div>
+                <h5>Objectives:</h5>
+                <ul>
+                    <li>collect &#10032 for speed and shooting power</li>
+                    <li>collect &#129473 for dash ability: &#9889</li>
+                    <li>collect at least 3 SPACEFISH &#128031</li>
+                    <li>...and avoid all the things that will slow you down!!</li>
+                    <li> &#127793 &#128230 &#9728 &#128025</li>
 
-        <div id="fish"></div>
-    </div>
+                </ul>
+            </div>
+        </div>
+        <button id="startGame">Play</button>
+    </section>
+    <section id="gamePlay">
+        <div id="scoreViewer">
+            <div id="stars"></div>
+            <div id="muffins"></div>
+            <div id="msg"></div>
+            <div id="bolt"></div>
+            <div id="fish"></div>
+        </div>
+        <canvas height="500" , width="1200"></canvas>
+        <div id="processTracker">
+            <div id="clock"></div>
+        </div>
+    </section>
 
-    <canvas height="500" , width="1200"></canvas>
-    <div id="processTracker">
-        <div id="clock"></div>
-    </div>
+    <section id="gameOver">
+        <div>
+            <h1>GAME OVER</h1>
+        </div>
+        <button id="restart">Play Again</button>
+    </section>
+    <section id="youWon">
+        <div>
+            <h1>YOU WON</h1>
+        </div>
+        <button id="restart">Play Again</button>
+    </section>
+
+    <!--SCRIPTS-->
     <script src="item.js"></script>
-
     <script src="sunbeam.js"></script>
     <script src="spacefish.js"></script>
     <script src="bulletStar.js"></script>
     <script src="octopus.js"></script>
     <script src="wormhole.js"></script>
-
     <script src="muffin.js"></script>
     <script src="player.js"></script>
     <script src="star.js"></script>

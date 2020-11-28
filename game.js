@@ -2,8 +2,23 @@ class Game {
     constructor(canvas) {
         this.canvas = canvas;
         this.ctx = canvas.getContext('2d');
-        this.player = new Player(this, 50, 50, 20, 20);
+        this.reset();
         this.setKeys();
+        this.timectr = setInterval(() => {
+            const clock = document.getElementById('clock');
+            if (this.clock < 0) {
+                //clock.innerHTML = `TOO LATE - GAME OVER !!`;
+                this.active = false;
+            } else {
+                clock.innerHTML = `TIME TO DINNER ${this.clock}`;
+            }
+
+            this.clock--;
+        }, 1000);
+    }
+
+    reset() {
+        this.player = new Player(this, 50, 50, 20, 20);
         this.stars = [];
         this.ferns = [];
         this.pillows = [];
@@ -18,18 +33,9 @@ class Game {
         );
         this.wormhole = undefined;
         this.initialSpeed = 1;
-        this.clock = 300;
         this.i = 0;
-        this.timectr = setInterval(() => {
-            const clock = document.getElementById('clock');
-            if (this.clock < 0) {
-                clock.innerHTML = `TOO LATE - GAME OVER !!`;
-            } else {
-                clock.innerHTML = `TIME TO DINNER ${this.clock}`;
-            }
-
-            this.clock--;
-        }, 1000);
+        this.active = true;
+        this.clock = 30;
     }
 
     //////////////////////KEYS////////////////////////////////////////////
@@ -367,11 +373,11 @@ class Game {
             bullet.draw();
         }
         //octopus
-        // if (this.player.fish > 2) {
-        if (this.octopus) {
-            this.octopus.draw();
+        if (this.player.fish > 2) {
+            if (this.octopus) {
+                this.octopus.draw();
+            }
         }
-        // }
 
         if (this.wormhole) {
             this.wormhole.draw();
@@ -383,9 +389,13 @@ class Game {
     loop() {
         this.runLogic();
         this.draw();
-
-        window.requestAnimationFrame(() => {
-            this.loop();
-        });
+        if (this.active) {
+            window.requestAnimationFrame(() => {
+                this.loop();
+            });
+        } else {
+            playGame.style.display = 'none';
+            gameOver.style.display = 'initial';
+        }
     }
 }

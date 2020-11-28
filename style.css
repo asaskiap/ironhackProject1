@@ -10,6 +10,40 @@ body {
     text-align: center;
 }
 
+ul {
+    line-height: 2.7rem;
+}
+
+li {
+    list-style-type: none;
+}
+
+button {
+    width: 5rem;
+    background-color: antiquewhite;
+    color: black;
+    border: 2px solid aquamarine;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 700;
+}
+
+#preGame,
+#gameOver,
+#youWon {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#gameOver,
+#youWon {
+    display: none;
+    margin-top: 15rem;
+}
+
 #scoreViewer {
     height: 3em;
     display: flex;

@@ -14,14 +14,14 @@ class Player {
     }
 
     shoot() {
-        // if (this.stars > 0) {
-        const bullet = new BulletStar(
-            this.x + this.height / 2,
-            this.y + this.width / 2
-        );
-        this.bulletStars.push(bullet);
-        this.stars--;
-        // }
+        if (this.stars > 0) {
+            const bullet = new BulletStar(
+                this.x + this.height / 2,
+                this.y + this.width / 2
+            );
+            this.bulletStars.push(bullet);
+            this.stars--;
+        }
     }
     collectFish() {
         console.log('interaction');
