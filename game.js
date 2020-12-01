@@ -180,8 +180,8 @@ class Game {
 
     createWormhole() {
         this.wormhole = new Wormhole(
-            this.canvas.width - 100,
-            this.canvas.height / 2
+            this.canvas.width - 150,
+            this.canvas.height / 3
         );
     }
 
