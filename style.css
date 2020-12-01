@@ -1,5 +1,6 @@
 body {
     background-color: rgb(20, 21, 29);
+    background-image: url('./images/1024x1024\ Starfield\ 2.png');
     color: whitesmoke;
     margin: 0;
     display: flex;
@@ -30,6 +31,8 @@ button {
 #preGame,
 #gameOver,
 #youWon {
+    background-image: url('./images/1024x1024\ Starfield\ 2.png');
+    background-size: cover;
     width: 100vw;
     height: 100vh;
     display: flex;
@@ -37,6 +40,12 @@ button {
     justify-content: center;
     align-items: center;
 }
+
+
+/* 
+#instructions {
+    background-color: rgb(20, 21, 29);
+} */
 
 #gameOver,
 #youWon {

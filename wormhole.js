@@ -1,3 +1,6 @@
+const wormholeImg = new Image();
+wormholeImg.src = './images/wormhole.png';
+
 class Wormhole extends Item {
     constructor(x, y) {
         super(x, y, 0, 0);
@@ -18,10 +21,11 @@ class Wormhole extends Item {
     }
 
     draw() {
-        game.ctx.fillStyle = this.color;
-        game.ctx.beginPath();
-        game.ctx.arc(this.x, this.y, this.width, 0, 2 * Math.PI);
-        game.ctx.closePath();
-        game.ctx.fill();
+        // game.ctx.fillStyle = this.color;
+        // game.ctx.beginPath();
+        // game.ctx.arc(this.x, this.y, this.width, 0, 2 * Math.PI);
+        // game.ctx.closePath();
+        // game.ctx.fill();
+        game.ctx.drawImage(wormholeImg, this.x, this.y, this.width, this.height);
     }
 }

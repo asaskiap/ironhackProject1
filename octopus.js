@@ -26,8 +26,8 @@ class Octopus extends Item {
         this.y += this.dy;
     }
     draw() {
-        // game.ctx.fillStyle = this.color;
-        // game.ctx.fillRect(this.x, this.y, this.width, this.height);
-        game.ctx.drawImage(lastBossImg, this.x, this.y, this.width, this.height);
+        game.ctx.fillStyle = this.color;
+        game.ctx.fillRect(this.x, this.y, this.width, this.height);
+        //game.ctx.drawImage(lastBossImg, this.x, this.y, this.width, this.height);
     }
 }
