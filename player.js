@@ -71,7 +71,7 @@ class Player {
         // you can't jump if you are already in a sunbeam
         console.log(this.sunbeamctr, this.muffins);
         if (this.sunbeamctr < 1 && this.muffins > 2) {
-            this.x += 250;
+            this.x += 350;
             this.muffins -= 3;
         }
     }
