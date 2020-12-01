@@ -60,6 +60,10 @@ button {
     padding: 20px;
 }
 
+p {
+    width: 70vw;
+}
+
 canvas {
     background-color: rgb(33, 40, 54);
     background-image: url('./images/1024x1024\ Purple\ Nebula\ 2.png');
@@ -72,8 +76,7 @@ canvas {
     display: flex;
 }
 
-#clock,
-#distance {
-    width: 50vw;
+#clock {
+    width: 40vw;
     text-align: center;
 }
