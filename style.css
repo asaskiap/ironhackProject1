@@ -62,6 +62,9 @@ button {
 
 canvas {
     background-color: rgb(33, 40, 54);
+    background-image: url('./images/1024x1024\ Purple\ Nebula\ 2.png');
+    background-size: cover;
+    background-repeat: no-repeat;
     border: 2px solid whitesmoke;
 }
 

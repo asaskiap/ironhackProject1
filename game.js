@@ -18,7 +18,7 @@ class Game {
     }
 
     reset() {
-        this.player = new Player(this, 50, 50, 20, 20);
+        this.player = new Player(this, 50, 50, 80, 80);
         this.stars = [];
         this.ferns = [];
         this.pillows = [];
@@ -48,6 +48,7 @@ class Game {
                     //this.player.y -= this.player.dy;
                     if (!this.keys.includes('ArrowUp')) {
                         this.keys.push('ArrowUp');
+                        this.player.img = catBack;
                     }
 
                     break;
@@ -55,6 +56,7 @@ class Game {
                     //this.player.y += this.player.dy;
                     if (!this.keys.includes('ArrowDown')) {
                         this.keys.push('ArrowDown');
+                        this.player.img = catFrontal;
                     }
                     break;
                 case 'ArrowRight':
@@ -64,6 +66,7 @@ class Game {
                     // this.player.x += this.player.dx;
                     if (!this.keys.includes('ArrowRight')) {
                         this.keys.push('ArrowRight');
+                        this.player.img = catRight;
                     }
 
                     break;
@@ -71,6 +74,7 @@ class Game {
                     // this.player.x -= this.player.dx;
                     if (!this.keys.includes('ArrowLeft')) {
                         this.keys.push('ArrowLeft');
+                        this.player.img = catLeft;
                     }
                     break;
                 case ' ':
@@ -112,7 +116,7 @@ class Game {
 
     ///////////////////////CREATE////////////////////////////////////////////////////////////
     createStars() {
-        if (Math.random() < 0.03 + this.i * 2) {
+        if (Math.random() < 0.02 + this.i * 2) {
             const star = new Star(
                 this.canvas.width,
                 Math.random() * this.canvas.height,
@@ -123,7 +127,7 @@ class Game {
     }
 
     createFerns() {
-        if (Math.random() < 0.01 + this.i) {
+        if (Math.random() < 0.003 + this.i) {
             const fern = new Fern(
                 this.canvas.width,
                 Math.random() * this.canvas.height,
@@ -134,7 +138,7 @@ class Game {
     }
 
     createPillows() {
-        if (Math.random() < 0.005 + this.i) {
+        if (Math.random() < 0.0015 + this.i) {
             const pillow = new Pillow(
                 this.canvas.width,
                 Math.random() * this.canvas.height,
@@ -145,7 +149,7 @@ class Game {
     }
 
     createMuffins() {
-        if (Math.random() < 0.003 + this.i) {
+        if (Math.random() < 0.001 + this.i) {
             const muffin = new Muffin(
                 this.canvas.width,
                 Math.random() * this.canvas.height,

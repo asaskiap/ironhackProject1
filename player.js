@@ -1,3 +1,12 @@
+const catFrontal = new Image();
+catFrontal.src = './images/IronhackCanvasGame_kittyFrontNew.png';
+const catLeft = new Image();
+catLeft.src = './images/IronhackCanvasGame_kittyLeft.png';
+const catRight = new Image();
+catRight.src = './images/IronhackCanvasGame_kittyRight.png';
+const catBack = new Image();
+catBack.src = './images/IronhackCanvasGame_kittyBack.png';
+
 class Player {
     constructor(game, x, y, h, w, dx = 1, dy = 1) {
         this.game = game;
@@ -12,6 +21,7 @@ class Player {
         this.sunbeamctr = 0;
         this.muffins = 0;
         this.fish = 0;
+        this.img = catFrontal;
     }
 
     shoot() {
@@ -136,7 +146,8 @@ class Player {
     }
 
     draw(x, y) {
-        game.ctx.fillStyle = 'lightgrey';
-        game.ctx.fillRect(this.x, this.y, this.width, this.height);
+        // game.ctx.fillStyle = 'lightgrey';
+        // game.ctx.fillRect(this.x, this.y, this.width, this.height);
+        this.game.ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     }
 }

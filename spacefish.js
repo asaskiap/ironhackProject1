@@ -1,9 +1,12 @@
+const fishImage = new Image();
+fishImage.src = './images/IronhackCanvasGame_fish.png';
+
 class Spacefisch extends Item {
     constructor(x, y, dx, dy) {
         super(x, y, (dx = Math.random() * 3), (dy = Math.random() * 6 - 4));
         this.color = '#00FFFF';
-        this.width = 15;
-        this.height = 5;
+        this.width = 30;
+        this.height = 30;
         this.changeDirectionCtr = Math.random() * 200;
     }
 
@@ -40,7 +43,8 @@ class Spacefisch extends Item {
     }
 
     draw() {
-        game.ctx.fillStyle = this.color;
-        game.ctx.fillRect(this.x, this.y, this.width, this.height);
+        // game.ctx.fillStyle = this.color;
+        // game.ctx.fillRect(this.x, this.y, this.width, this.height);
+        game.ctx.drawImage(fishImage, this.x, this.y, this.width, this.height);
     }
 }

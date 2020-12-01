@@ -1,9 +1,12 @@
+const boxImage = new Image();
+boxImage.src = './images/IronhackCanvasGame_box.png';
+
 class Pillow extends Item {
     constructor(x, y, dx, dy = 0) {
         super(x, y, dx, (dy = 0));
         this.color = '#ab183f';
-        this.width = 10;
-        this.height = 10;
+        this.width = 40;
+        this.height = 40;
     }
 
     runLogic() {
@@ -22,6 +25,6 @@ class Pillow extends Item {
     }
 
     draw() {
-        super.draw();
+        game.ctx.drawImage(boxImage, this.x, this.y, this.width, this.height);
     }
 }
