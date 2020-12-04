@@ -11,6 +11,8 @@ const eatFern = new Image();
 eatFern.src = './images/IronhackCanvasGame_kittyFern.png';
 const inBox = new Image();
 inBox.src = './images/IronhackCanvasGame_catInBox.png';
+const catSleeping = new Image();
+catSleeping.src = './images/kittySleeping.png';
 
 //Audio
 const nom = new Audio('./sounds/eating muffin.mp3');
@@ -157,6 +159,7 @@ class Player {
             msg.innerHTML = `NAP ATTACK`;
         }
         if (this.sunbeamctr > 0) {
+            this.img = catSleeping;
             this.x = this.x - 2;
             this.y = this.sunbeamy;
             this.sunbeamctr--;
