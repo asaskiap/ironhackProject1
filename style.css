@@ -23,10 +23,10 @@ li {
 
 button {
     width: 5rem;
-    background-color: antiquewhite;
-    color: black;
-    border: 2px solid aquamarine;
-    font-family: 'Courier New', Courier, monospace;
+    padding: 10px;
+    background-color: transparent;
+    color: white;
+    border: 2px solid wheat;
     font-weight: 700;
 }
 
@@ -97,7 +97,12 @@ canvas {
     display: flex;
 }
 
-#clock {
+#clock,
+#controlls {
     width: 40vw;
     text-align: center;
+}
+
+#mute {
+    margin-left: 2rem;
 }

@@ -39,6 +39,18 @@ class Player {
         this.fish = 0;
         this.img = catFrontal;
         this.fishDisplay = document.getElementById('fishDisplay');
+        this.mute = false;
+        // mute button
+        const mute = document.getElementById('mute');
+        mute.addEventListener('click', () => {
+            if (!this.mute) {
+                this.mute = true;
+                mute.innerHTML = 'UNMUTE';
+            } else {
+                this.mute = false;
+                mute.innerHTML = 'MUTE SOUNDS';
+            }
+        });
     }
 
     shoot() {
@@ -52,7 +64,10 @@ class Player {
         }
     }
     collectFish() {
-        fishSound.play();
+        if (!this.mute) {
+            fishSound.play();
+        }
+
         this.fish++;
         if (this.fish === 1) {
             this.fishDisplay.src = 'images/fishCounter_1.png';
@@ -69,7 +84,10 @@ class Player {
     }
 
     collectStars() {
-        starSound.play();
+        if (!this.mute) {
+            starSound.play();
+        }
+
         this.stars++;
         if (this.stars % 5 === 0) {
             this.addSpeed();
@@ -78,23 +96,34 @@ class Player {
 
     collectMuffins() {
         this.muffins++;
-        nom.play();
+        if (!this.mute) {
+            nom.play();
+        }
     }
 
     fern() {
-        fernSound.play();
+        if (!this.mute) {
+            fernSound.play();
+        }
+
         this.fernctr = 200;
         this.fern_x = this.x;
         this.fern_y = this.y;
     }
 
     pillow() {
-        boxSound.play();
+        if (!this.mute) {
+            boxSound.play();
+        }
+
         this.pillowctr = 200;
     }
 
     sunbeam() {
-        purr.play();
+        if (!this.mute) {
+            purr.play();
+        }
+
         this.sunbeamctr = 100;
         this.sunbeamy = this.y;
     }
