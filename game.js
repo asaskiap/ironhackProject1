@@ -24,16 +24,15 @@ class Game {
         this.pillows = [];
         this.muffins = [];
         this.sunbeams = [];
-        this.spacefish = [];
+        this.portal = [];
         this.octopus = new Octopus(
             this.canvas.width - 150,
             this.canvas.height / 6,
             0,
             3
         );
-        this.wormhole = undefined;
+
         this.initialSpeed = 1;
-        this.i = 0;
         this.active = true;
         this.clock = 300;
 
@@ -116,7 +115,7 @@ class Game {
 
     ///////////////////////CREATE////////////////////////////////////////////////////////////
     createStars() {
-        if (Math.random() < 0.02 + this.i * 2) {
+        if (Math.random() < 0.02) {
             const star = new Star(
                 this.canvas.width,
                 Math.random() * this.canvas.height,
@@ -127,7 +126,7 @@ class Game {
     }
 
     createFerns() {
-        if (Math.random() < 0.003 + this.i) {
+        if (Math.random() < 0.003) {
             const fern = new Fern(
                 this.canvas.width,
                 Math.random() * this.canvas.height,
@@ -138,7 +137,7 @@ class Game {
     }
 
     createPillows() {
-        if (Math.random() < 0.0015 + this.i) {
+        if (Math.random() < 0.0015) {
             const pillow = new Pillow(
                 this.canvas.width,
                 Math.random() * this.canvas.height,
@@ -149,7 +148,7 @@ class Game {
     }
 
     createMuffins() {
-        if (Math.random() < 0.001 + this.i) {
+        if (Math.random() < 0.001) {
             const muffin = new Muffin(
                 this.canvas.width,
                 Math.random() * this.canvas.height,
@@ -166,15 +165,15 @@ class Game {
         }
     }
 
-    createSpacefish() {
+    createPortal() {
         if (Math.random() < 0.0007) {
-            const fish = new Spacefisch(
+            const portal = new Portal(
                 this.canvas.width,
                 Math.random() * this.canvas.height,
                 2,
                 2
             );
-            this.spacefish.push(fish);
+            this.portal.push(portal);
         }
     }
 
@@ -193,9 +192,9 @@ class Game {
         this.cleanUpItems(this.muffins);
         this.cleanUpItems(this.pillows);
         this.cleanUpItems(this.sunbeams);
-        for (let i = 0; i < this.spacefish.length; i++) {
-            if (this.spacefish[i].x + this.spacefish[i].width < 0) {
-                this.spacefish.splice(i, 1);
+        for (let i = 0; i < this.portal.length; i++) {
+            if (this.portal[i].x + this.portal[i].width < 0) {
+                this.portal.splice(i, 1);
             }
         }
         for (let i = 0; i < this.player.bulletStars.length; i++) {
@@ -279,11 +278,11 @@ class Game {
         }
 
         //spacefish
-        for (let fish of this.spacefish) {
-            if (fish.interactionDetection(this.player)) {
+        for (let portal of this.portal) {
+            if (portal.interactionDetection(this.player)) {
                 this.player.collectFish();
-                let idx = this.spacefish.indexOf(fish);
-                this.spacefish.splice(idx, 1);
+                let idx = this.portal.indexOf(portal);
+                this.portal.splice(idx, 1);
             }
         }
 
@@ -298,24 +297,12 @@ class Game {
                 }
             }
         }
-
-        // wormhole
-
-        if (this.wormhole) {
-            if (this.wormhole.interactionDetection(this.player)) {
-                console.log('YOU WON');
-                const clock = document.getElementById('clock');
-
-                clock.innerHTML = `YOU WON!!`;
-            }
-        }
     }
 
     ///////////////////////// SPEED //////////////////////////////////////////////
 
-    speedUpdate(factor) {
-        this.initialSpeed += 0.0001 * factor;
-        this.i += 0.000001;
+    speedUpdate() {
+        this.initialSpeed += 0.0001;
     }
 
     ////////////////////////////// LOGIC ///////////////////////////////////////////
@@ -374,9 +361,9 @@ class Game {
         }
 
         //spacefish logic
-        this.createSpacefish();
-        for (let fish of this.spacefish) {
-            fish.runLogic();
+        this.createPortal();
+        for (let p of this.portal) {
+            p.runLogic();
         }
         //bullet logic
         for (let bullet of this.player.bulletStars) {
@@ -397,8 +384,8 @@ class Game {
         this.cleanUp();
 
         this.interactionDetection();
-        let factor = 1;
-        this.speedUpdate(factor);
+
+        this.speedUpdate();
     }
 
     /////////////////////////////////// DRAW //////////////////////////////////////
@@ -430,22 +417,12 @@ class Game {
             sun.draw();
         }
         // spacefish
-        for (let fish of this.spacefish) {
-            fish.draw();
+        for (let p of this.portal) {
+            p.draw();
         }
         //bullets
         for (let bullet of this.player.bulletStars) {
             bullet.draw();
-        }
-        //octopus
-        if (this.player.fish > 2) {
-            if (this.octopus) {
-                this.octopus.draw();
-            }
-        }
-
-        if (this.wormhole) {
-            this.wormhole.draw();
         }
     }
 

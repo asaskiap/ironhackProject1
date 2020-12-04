@@ -1,3 +1,4 @@
+//Images
 const catFrontal = new Image();
 catFrontal.src = './images/IronhackCanvasGame_kittyFrontNew.png';
 const catLeft = new Image();
@@ -6,7 +7,20 @@ const catRight = new Image();
 catRight.src = './images/IronhackCanvasGame_kittyRight.png';
 const catBack = new Image();
 catBack.src = './images/IronhackCanvasGame_kittyBack.png';
+const eatFern = new Image();
+eatFern.src = './images/IronhackCanvasGame_kittyFern.png';
+const inBox = new Image();
+inBox.src = './images/IronhackCanvasGame_catInBox.png';
 
+//Audio
+const nom = new Audio('./sounds/eating muffin.mp3');
+const fernSound = new Audio('./sounds/chewing plant.mp3');
+const purr = new Audio('./sounds/sun beam purring.mp3');
+const starSound = new Audio('./sounds/Bubbles5.wav');
+const fishSound = new Audio('./sounds/BellShort1.wav');
+const boxSound = new Audio('./sounds/cat in a box.mp3');
+
+//code
 class Player {
     constructor(game, x, y, h, w, dx = 1, dy = 1) {
         this.game = game;
@@ -22,6 +36,7 @@ class Player {
         this.muffins = 0;
         this.fish = 0;
         this.img = catFrontal;
+        this.fishDisplay = document.getElementById('fishDisplay');
     }
 
     shoot() {
@@ -35,13 +50,24 @@ class Player {
         }
     }
     collectFish() {
-        console.log('interaction');
+        fishSound.play();
         this.fish++;
-        const fishCtr = document.getElementById('fish');
-        fishCtr.innerHTML += '&#128031';
+        if (this.fish === 1) {
+            this.fishDisplay.src = 'images/fishCounter_1.png';
+        }
+        if (this.fish === 2) {
+            this.fishDisplay.src = 'images/fishCounter_2.png';
+        }
+        if (this.fish === 3) {
+            this.fishDisplay.src = 'images/fishCounter_3.png';
+        }
+
+        // const fishCtr = document.getElementById('fish');
+        // fishCtr.innerHTML += '&#128031';
     }
 
     collectStars() {
+        starSound.play();
         this.stars++;
         if (this.stars % 5 === 0) {
             this.addSpeed();
@@ -50,19 +76,23 @@ class Player {
 
     collectMuffins() {
         this.muffins++;
+        nom.play();
     }
 
     fern() {
+        fernSound.play();
         this.fernctr = 200;
         this.fern_x = this.x;
         this.fern_y = this.y;
     }
 
     pillow() {
+        boxSound.play();
         this.pillowctr = 200;
     }
 
     sunbeam() {
+        purr.play();
         this.sunbeamctr = 100;
         this.sunbeamy = this.y;
     }
@@ -110,6 +140,7 @@ class Player {
 
         // logic for interaction with fern, pillow, sunbeam
         if (this.fernctr > 0) {
+            this.img = eatFern;
             this.x = this.fern_x;
             this.y = this.fern_y;
 
@@ -118,6 +149,7 @@ class Player {
             msg.innerHTML = `FERN SNACKING ATTACK`;
         }
         if (this.pillowctr > 0) {
+            this.img = inBox;
             this.x = 0;
             this.y = 0;
             this.pillowctr--;
