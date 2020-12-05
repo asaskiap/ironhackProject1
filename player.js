@@ -21,6 +21,7 @@ const purr = new Audio('./sounds/sun beam purring.mp3');
 const starSound = new Audio('./sounds/Bubbles5.wav');
 const fishSound = new Audio('./sounds/BellShort1.wav');
 const boxSound = new Audio('./sounds/cat in a box.mp3');
+const hitByOctopusSound = new Audio('./sounds/hit by octopus.mp3');
 
 //code
 class Player {
@@ -40,6 +41,7 @@ class Player {
         this.img = catFrontal;
         this.fishDisplay = document.getElementById('fishDisplay');
         this.mute = false;
+        this.hitCounter = 0;
         // mute button
         const mute = document.getElementById('mute');
         mute.addEventListener('click', () => {
@@ -63,6 +65,17 @@ class Player {
             this.stars--;
         }
     }
+
+    hitByOctopus() {
+        if (!this.mute) {
+            hitByOctopusSound.play();
+        }
+        this.hitCounter++;
+        if (this.hitCounter > 9) {
+            this.fish = 0;
+            this.fishDisplay.src = 'images/fishCounter.png';
+        }
+    }
     collectFish() {
         if (!this.mute) {
             fishSound.play();
@@ -77,6 +90,12 @@ class Player {
         }
         if (this.fish === 3) {
             this.fishDisplay.src = 'images/fishCounter_3.png';
+            this.game.octopus = new Octopus(
+                this.game.canvas.width - 200,
+                this.game.canvas.height / 2 - 100,
+                0,
+                2
+            );
         }
 
         // const fishCtr = document.getElementById('fish');

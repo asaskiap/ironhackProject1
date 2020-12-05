@@ -1,7 +1,7 @@
 const fishImage = new Image();
 fishImage.src = './images/IronhackCanvasGame_fish.png';
 
-class Portal extends Item {
+class Spacefish extends Item {
     constructor(x, y, dx, dy) {
         super(x, y, (dx = Math.random() * 3), (dy = Math.random() * 6 - 4));
         this.color = '#00FFFF';

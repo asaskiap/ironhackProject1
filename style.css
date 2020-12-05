@@ -50,9 +50,9 @@ button {
 } */
 
 #gameOver,
+#gamePlay,
 #youWon {
     display: none;
-    margin-top: 15rem;
 }
 
 #scoreViewer {

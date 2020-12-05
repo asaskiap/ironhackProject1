@@ -24,17 +24,11 @@ class Game {
         this.pillows = [];
         this.muffins = [];
         this.sunbeams = [];
-        this.portal = [];
-        this.octopus = new Octopus(
-            this.canvas.width - 150,
-            this.canvas.height / 6,
-            0,
-            3
-        );
-
+        this.spacefish = [];
+        this.octopus = undefined;
         this.initialSpeed = 1;
         this.active = true;
-        this.clock = 300;
+        this.clock = 150;
 
         this.keys = [];
     }
@@ -165,23 +159,16 @@ class Game {
         }
     }
 
-    createPortal() {
+    createFish() {
         if (Math.random() < 0.0007) {
-            const portal = new Portal(
+            const fish = new Spacefish(
                 this.canvas.width,
                 Math.random() * this.canvas.height,
                 2,
                 2
             );
-            this.portal.push(portal);
+            this.spacefish.push(fish);
         }
-    }
-
-    createWormhole() {
-        this.wormhole = new Wormhole(
-            this.canvas.width - 150,
-            this.canvas.height / 3
-        );
     }
 
     ///////////////////////////CLEAN UP////////////////////////////////////////////////////
@@ -192,9 +179,9 @@ class Game {
         this.cleanUpItems(this.muffins);
         this.cleanUpItems(this.pillows);
         this.cleanUpItems(this.sunbeams);
-        for (let i = 0; i < this.portal.length; i++) {
-            if (this.portal[i].x + this.portal[i].width < 0) {
-                this.portal.splice(i, 1);
+        for (let i = 0; i < this.spacefish.length; i++) {
+            if (this.spacefish[i].x + this.spacefish[i].width < 0) {
+                this.spacefish.splice(i, 1);
             }
         }
         for (let i = 0; i < this.player.bulletStars.length; i++) {
@@ -278,11 +265,29 @@ class Game {
         }
 
         //spacefish
-        for (let portal of this.portal) {
+        for (let portal of this.spacefish) {
             if (portal.interactionDetection(this.player)) {
                 this.player.collectFish();
-                let idx = this.portal.indexOf(portal);
-                this.portal.splice(idx, 1);
+                let idx = this.spacefish.indexOf(portal);
+                this.spacefish.splice(idx, 1);
+            }
+        }
+
+        if (this.octopus) {
+            if (this.player.hitCounter > 9) {
+                this.octopus = undefined;
+                this.player.hitCounter = 0;
+            }
+        }
+
+        // octopusBullets with player
+        if (this.octopus) {
+            for (let bullet of this.octopus.bullets) {
+                if (bullet.interactionDetection(this.player)) {
+                    this.player.hitByOctopus();
+                    let idx = this.octopus.bullets.indexOf(bullet);
+                    this.octopus.bullets.splice(idx, 1);
+                }
             }
         }
 
@@ -361,8 +366,8 @@ class Game {
         }
 
         //spacefish logic
-        this.createPortal();
-        for (let p of this.portal) {
+        this.createFish();
+        for (let p of this.spacefish) {
             p.runLogic();
         }
         //bullet logic
@@ -376,7 +381,8 @@ class Game {
             this.octopus.runLogic();
             if (this.octopus.life < 0) {
                 this.octopus = undefined;
-                this.createWormhole();
+                playGame.style.display = 'none';
+                winningScreen.style.display = 'initial';
             }
         }
 
@@ -417,12 +423,20 @@ class Game {
             sun.draw();
         }
         // spacefish
-        for (let p of this.portal) {
+        for (let p of this.spacefish) {
             p.draw();
         }
         //bullets
         for (let bullet of this.player.bulletStars) {
             bullet.draw();
+        }
+
+        // octopus
+        if (this.octopus) {
+            this.octopus.draw();
+            for (let bullet of this.octopus.bullets) {
+                bullet.draw();
+            }
         }
     }
 
