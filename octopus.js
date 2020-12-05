@@ -7,7 +7,7 @@ class Octopus extends Item {
         this.color = 'coral';
         this.width = 400;
         this.height = 300;
-        this.life = 200;
+        this.life = 100;
         this.bullets = [];
     }
 

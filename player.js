@@ -50,7 +50,7 @@ class Player {
                 mute.innerHTML = 'UNMUTE';
             } else {
                 this.mute = false;
-                mute.innerHTML = 'MUTE SOUNDS';
+                mute.innerHTML = 'MUTE';
             }
         });
     }
@@ -108,15 +108,15 @@ class Player {
         }
 
         this.stars++;
-        if (this.stars % 5 === 0) {
-            this.addSpeed();
-        }
     }
 
     collectMuffins() {
-        this.muffins++;
         if (!this.mute) {
             nom.play();
+        }
+        this.muffins++;
+        if (this.muffins % 2 === 0) {
+            this.addSpeed();
         }
     }
 
@@ -150,9 +150,9 @@ class Player {
     jump() {
         // you can't jump if you are already in a sunbeam
         console.log(this.sunbeamctr, this.muffins);
-        if (this.sunbeamctr < 1 && this.muffins > 2) {
+        if (this.sunbeamctr < 1 && this.muffins > 4) {
             this.x += 350;
-            this.muffins -= 3;
+            this.muffins -= 5;
         }
     }
 
@@ -160,7 +160,7 @@ class Player {
         // Muffins
         const muffins = document.getElementById('muffins');
         muffins.innerHTML = `&#129473: ${this.muffins}`;
-        if (this.muffins > 2) {
+        if (this.muffins > 4) {
             const bolt = document.getElementById('bolt');
             bolt.innerHTML = `&#9889`;
         } else {
@@ -204,7 +204,7 @@ class Player {
             this.y = 0;
             this.pillowctr--;
             const msg = document.getElementById('msg');
-            msg.innerHTML = `NAP ATTACK`;
+            msg.innerHTML = `BOX ATTACK`;
         }
         if (this.sunbeamctr > 0) {
             this.img = catSleeping;

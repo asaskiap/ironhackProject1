@@ -36,6 +36,14 @@ class Game {
     //////////////////////KEYS////////////////////////////////////////////
     setKeys() {
         window.addEventListener('keydown', (event) => {
+            // if player is incapacitated, don't do anything
+            if (
+                this.player.sunbeamctr > 0 ||
+                this.player.fernctr > 0 ||
+                this.player.pillowctr > 0
+            ) {
+                return;
+            }
             switch (event.key) {
                 case 'ArrowUp':
                     //this.player.y -= this.player.dy;
@@ -142,7 +150,7 @@ class Game {
     }
 
     createMuffins() {
-        if (Math.random() < 0.001) {
+        if (Math.random() < 0.003) {
             const muffin = new Muffin(
                 this.canvas.width,
                 Math.random() * this.canvas.height,

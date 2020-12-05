@@ -22,11 +22,14 @@ li {
 }
 
 button {
-    width: 5rem;
+    font-family: 'Yanone Kaffeesatz', sans-serif;
+    letter-spacing: 3px;
+    width: 8rem;
     padding: 10px;
     background-color: transparent;
     color: white;
     border: 2px solid wheat;
+    font-size: 2rem;
     font-weight: 700;
 }
 
@@ -43,11 +46,17 @@ button {
     align-items: center;
 }
 
-
-/* 
 #instructions {
-    background-color: rgb(20, 21, 29);
-} */
+    width: 100vw;
+    line-height: 30px;
+    display: flex;
+    justify-content: space-around;
+    align-items: stretch;
+}
+
+#instructions div {
+    width: 40vw;
+}
 
 #gameOver,
 #gamePlay,
@@ -81,8 +90,8 @@ button {
     width: 30vw;
 }
 
-p {
-    width: 70vw;
+#emptyP {
+    height: 3rem;
 }
 
 canvas {
