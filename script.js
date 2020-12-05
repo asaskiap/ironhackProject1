@@ -18,9 +18,12 @@ const playGame = document.getElementById('gamePlay');
 const gameOver = document.getElementById('gameOver');
 const winningScreen = document.getElementById('youWon');
 
+const music = new Audio('./sounds/BackgroundSound.mp3');
+
 play.addEventListener('click', () => {
     preGameScreen.style.display = 'none';
     playGame.style.display = 'initial';
+    music.play();
     game.loop();
 });
 

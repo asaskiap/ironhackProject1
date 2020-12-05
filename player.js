@@ -48,6 +48,7 @@ class Player {
             if (!this.mute) {
                 this.mute = true;
                 mute.innerHTML = 'UNMUTE';
+                music.stop();
             } else {
                 this.mute = false;
                 mute.innerHTML = 'MUTE';

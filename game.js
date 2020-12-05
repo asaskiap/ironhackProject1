@@ -117,7 +117,7 @@ class Game {
 
     ///////////////////////CREATE////////////////////////////////////////////////////////////
     createStars() {
-        if (Math.random() < 0.02) {
+        if (Math.random() < 0.025) {
             const star = new Star(
                 this.canvas.width,
                 Math.random() * this.canvas.height,
@@ -168,7 +168,7 @@ class Game {
     }
 
     createFish() {
-        if (Math.random() < 0.0007) {
+        if (Math.random() < 0.0009) {
             const fish = new Spacefish(
                 this.canvas.width,
                 Math.random() * this.canvas.height,
